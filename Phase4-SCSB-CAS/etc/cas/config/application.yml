@@ -1,0 +1,39 @@
+info:
+  description: CAS Configuration
+
+server:
+  port: 10443
+
+cas:
+  authn:
+    jdbc:
+      query[0]:
+        sql: SELECT password FROM users WHERE username=? and active=1
+        healthQuery: SELECT 1 FROM INFORMATION_SCHEMA.VIEWS
+        isolateInternalQueries: false
+        url: jdbc:mysql://scsb-mysql:3306/recapcas?autoReconnect=true&useSSL=false
+        failFast: true
+        isolationLevelName: ISOLATION_READ_COMMITTED
+        leakThreshold: 10
+        propagationBehaviorName: PROPAGATION_REQUIRED
+        batchSize: 1
+        user: recap
+        ddlAuto: create-drop
+        maxAgeDays: 180
+        password: recap
+        autocommit: false
+        driverClass: com.mysql.cj.jdbc.Driver
+        idleTimeout: 5000
+        passwordEncoder.type: DEFAULT
+        passwordEncoder.characterEncoding: UTF-8
+        passwordEncoder.encodingAlgorithm: MD5
+        passwordEncoder.secret: recap
+    accept:
+      users:
+  logout:
+    followServiceRedirects: true
+  httpWebRequest:
+    header:
+      xframe: true
+      xss: true
+

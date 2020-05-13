@@ -1,0 +1,914 @@
+USE `recap`
+
+-- Script for Release 1.3.2 starts here
+
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Reid Hall (Paris, France)' WHERE `customer_code`='MZ';
+
+-- Script for Release 1.3.2 ends here
+
+-- Script for Release 1.2.9 start here
+alter table `recap`.`request_item_t` drop column `is_gfa_status_sch`;
+UPDATE `recap`.`request_item_status_t` SET `REQUEST_STATUS_CODE`='LAS_REFILE_REQUEST_PLACED', `REQUEST_STATUS_DESC`='LAS REFILE REQUEST PLACED' WHERE `REQUEST_STATUS_CODE`='REQUESTS_PLACED_ON_SCH';
+
+INSERT INTO `recap`.`request_item_status_t` (`REQUEST_STATUS_ID`, `REQUEST_STATUS_CODE`, `REQUEST_STATUS_DESC`) VALUES ('11', 'REQUESTS_PLACED_ON_SCH', 'REQUESTS PLACED ON SCH');
+
+ALTER TABLE recap.request_item_t
+ADD COLUMN IS_GFA_STATUS_SCH TINYINT(1) NOT NULL DEFAULT 0;
+
+-- Script for Release 1.2.9 ends
+
+
+-- Script for Release 1.2.8 Starts here
+
+-- MS-228 Description changes - starts here
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='CR';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='CU';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='EV';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='GC';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='NA';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='GP';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Firestone Library' WHERE `CUSTOMER_CODE`='PA';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='' WHERE `CUSTOMER_CODE`='QK';
+
+-- MS-228 Description changes ends here
+
+-- Script for Release 1.2.8 Ends here
+
+-- Script for Release 1.2.7 Starts here
+
+-- MS-228 Starts here
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Columbia Restricted' WHERE `CUSTOMER_CODE`='CR';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Columbia Standard' WHERE `CUSTOMER_CODE`='CU';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='East Asian Vernacular' WHERE `CUSTOMER_CODE`='EV';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Government Documents' WHERE `CUSTOMER_CODE`='GC';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='NYPL Standard' WHERE `CUSTOMER_CODE`='NA';
+
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Princeton Government Doc' WHERE `CUSTOMER_CODE`='GP';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Princeton Standard' WHERE `CUSTOMER_CODE`='PA';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Mendel Music Library' WHERE `CUSTOMER_CODE`='QK';
+
+
+INSERT INTO `recap`.`delivery_restriction_cross_partner_t` (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`, `DELIVERY_RESTRICTIONS`, `INSTITUTION_ID`) VALUES ('7', 'PJ', '1');
+INSERT INTO `recap`.`delivery_restriction_cross_partner_t` (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`, `DELIVERY_RESTRICTIONS`, `INSTITUTION_ID`) VALUES ('8', 'PK,PL,PM,PN,PQ,PT,PW', '1');
+INSERT INTO `recap`.`delivery_restriction_cross_partner_t` (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`, `DELIVERY_RESTRICTIONS`, `INSTITUTION_ID`) VALUES ('9', 'PG', '1');
+INSERT INTO `recap`.`delivery_restriction_cross_partner_t` (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`, `DELIVERY_RESTRICTIONS`, `INSTITUTION_ID`) VALUES ('10', 'PK', '1');
+
+
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='7' WHERE `CUSTOMER_CODE_ID`='30' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='1';
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('43', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('43', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('45', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('45', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('48', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('48', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('49', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('49', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('52', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('52', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('53', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('53', '9');
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='10' WHERE `CUSTOMER_CODE_ID`='58' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='1';
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('98', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('98', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('66', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('66', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('67', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('67', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('73', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('73', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('88', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('88', '9');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('101', '8');
+INSERT INTO `recap`.`cross_partner_mapping_t` (`CUSTOMER_CODE_ID`, `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) VALUES ('101', '9');
+
+-- MS-228 Ends here
+
+-- Script for Release 1.2.7 Ends here
+
+
+-- Script for Release 1.2.5 starts here
+-- MS-223 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MZ,RS,RH',`PWD_DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MZ,RS,RH' WHERE `CUSTOMER_CODE`='UA';
+-- MS-223 ends here
+-- MS-216 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NS,NC,NI,NK,NX,IN,SA,SM,SP,NY,SR,OM', `PWD_DELIVERY_RESTRICTIONS`='NS,NC,NI,NK,NX,SA,SM,SP,NY,SR' WHERE `CUSTOMER_CODE`='NS';
+-- MS-216 ends here
+-- Script for Release 1.2.5 ends here
+
+
+-- Script for Release 1.2.4 starts here
+CREATE TABLE IF NOT EXISTS `DEACCESSION_ITEM_CHANGE_LOG_T` (
+  `CHANGE_LOG_ID` 	INT 		        NOT NULL AUTO_INCREMENT,
+  `UPDATED_BY` 		      VARCHAR(45) 	  NULL,
+  `CREATED_DATE` 	      DATETIME 		    NULL,
+  `OPERATION_TYPE` 	    VARCHAR(200) 	  NULL,
+  `RECORD_ID` 		      INT 			      NULL,
+  `NOTES` 			        VARCHAR(2000) 	NULL,
+  PRIMARY KEY (`CHANGE_LOG_ID`),
+  INDEX (`UPDATED_BY`),
+  INDEX (`CREATED_DATE`),
+  INDEX (`OPERATION_TYPE`),
+  INDEX (`RECORD_ID`)
+)
+  ENGINE = InnoDB;
+
+-- Script for Release 1.2.4 ends here
+
+-- Script for Release 1.2.3 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NC,ND,NF,NG,NH,NI,NJ,NK,NM,NO,NR,NT,NX,NY,NZ,OZ,OA,OC,ON,OW',`PWD_DELIVERY_RESTRICTIONS`='NC,ND,NF,NG,NH,NI,NJ,NK,NM,NO,NR,NT,NX,NY,NZ,OZ,OA,OC,ON,OW',`RECAP_DELIVERY_RESTRICTIONS`='EDD,QP' WHERE `CUSTOMER_CODE`='NQ';
+-- Script for Release 1.2.3 ends here
+
+-- Script for Release 1.1.6 starts here
+
+--MS-176 starts here
+INSERT INTO `recap`.`ROLES_T` (`ROLE_ID`,`ROLE_NAME`,`ROLE_DESCRIPTION`,`CREATED_DATE`,`CREATED_BY`,`LAST_UPDATED_DATE`,`LAST_UPDATED_BY`) VALUES (7,'ReSubmit Request','ReSubmit Request',now(),'ReCAP',now(),'ReCAP');
+INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (13,'ReSubmit Request','Ability to ReSubmit Request');
+INSERT INTO `recap`.`ROLE_PERMISSION_T` (`ROLE_ID`,`PERMISSION_ID`) VALUES (7,13);
+--MS-176 ends here
+
+--MS-177 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NN,NK,NP,OP,NY',`PWD_DELIVERY_RESTRICTIONS`='NN,NK,NP,NY' WHERE `CUSTOMER_CODE`='NN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NP,NC,NE,NK,NI,NV,NX,IN,OP,NY',`PWD_DELIVERY_RESTRICTIONS`='NP,NC,NE,NK,NI,NV,NX,NY' WHERE `CUSTOMER_CODE`='NP';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NU,NK,NO,OZ,NY',`PWD_DELIVERY_RESTRICTIONS`='NU,NK,NO,NY' WHERE `CUSTOMER_CODE`='NU';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NP,NC,NI,NK,NV,NY',`PWD_DELIVERY_RESTRICTIONS`='NP,NC,NI,NK,NV,NY' WHERE `CUSTOMER_CODE`='NV';
+--MS-177 ends here
+-- Script for Release 1.1.6 ends here
+
+-- Script for Release 1.1.5 starts here
+--MS-173 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NO,NC,NI,NK,NY',`PWD_DELIVERY_RESTRICTIONS`='NO,NC,NI,NK,NY' WHERE `CUSTOMER_CODE`='NO';
+--MS-173 end here
+--MS-169 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='NA';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='NB';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NC,ND,NI,NK,NX,NY,OZ' WHERE `CUSTOMER_CODE`='ND';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='NH';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='NL';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ' WHERE `CUSTOMER_CODE`='NQ';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NU,NK,NO,OZ' WHERE `CUSTOMER_CODE`='NU';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ' WHERE `CUSTOMER_CODE`='NW';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NX,OZ' WHERE `CUSTOMER_CODE`='NX';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='GN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='JN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='JO';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OZ,OP,OB,OM' WHERE `CUSTOMER_CODE`='JS';
+UPDATE `recap`.`customer_code_t` SET `CUSTOMER_CODE` = 'OZ' WHERE `CUSTOMER_CODE`='OS';
+--MS-169 ends here
+-- Script for Release 1.1.5 ends here
+
+-- Script for Release 1.1.3 starts here
+
+--MS- 138 starts here
+INSERT INTO `recap`.`request_item_status_t` (REQUEST_STATUS_ID, REQUEST_STATUS_CODE,REQUEST_STATUS_DESC) VALUES ('10', 'LAS_ITEM_STATUS_PENDING', 'LAS ITEM STATUS PENDING');
+--MS- 138 ends here
+
+-- Script for Release 1.1.3 ends here
+
+
+-- Script for Release 1.1.2 starts here
+
+--MS-145 starts here
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BC,BT,BZ,MP,MZ,HS',`PWD_DELIVERY_RESTRICTIONS`='BC,BT,BZ,MP,MZ,HS' WHERE `CUSTOMER_CODE`='HX';
+--MS-145 ends here
+
+--MS- 151 starts here
+INSERT INTO `recap`.`PERMISSIONS_T` (`PERMISSION_ID`,`PERMISSION_NAME`,`PERMISSION_DESCRIPTION`) VALUES (12,'Bulk Request','Ability to place bulk request');
+INSERT INTO `recap`.`ROLE_PERMISSION_T` (`ROLE_ID`,`PERMISSION_ID`) VALUES (1,12);
+INSERT INTO `recap`.`ROLE_PERMISSION_T` (`ROLE_ID`,`PERMISSION_ID`) VALUES (5,12);
+--MS- 151 ends here
+
+-- Script for Release 1.1.2 ends here
+
+-- Script for Release 1.1 starts here
+
+--MS-143 Starts Here
+
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='NA';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='NB';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NC,ND,NI,NK,NX,NY,OS' WHERE `CUSTOMER_CODE`='ND';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='NH';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='NL';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NN,NK,NP,OP' WHERE `CUSTOMER_CODE`='NN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NP,NC,NE,NK,NI,NV,NX,IN,OP' WHERE `CUSTOMER_CODE`='NP';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS' WHERE `CUSTOMER_CODE`='NQ';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NS,NC,NK,NX,IN,SA,SM,SP,NY,SR,OM' WHERE `CUSTOMER_CODE`='NS';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NU,NK,NO,OS' WHERE `CUSTOMER_CODE`='NU';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS' WHERE `CUSTOMER_CODE`='NW';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NX,OS' WHERE `CUSTOMER_CODE`='NX';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='GN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='JN';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='JO';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW,OS,OP,OB,OM' WHERE `CUSTOMER_CODE`='JS';
+
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(115,'OS','SASB no Sierra holds',3,'','','','');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(116,'OP','LPA no Sierra holds',3,'','','','');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(117,'OB','SIBL no Sierra holds',3,'','','','');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(118,'OM','Schomburg Gen. no Sierra holds',3,'','','','');
+
+--MS-143 Ends Here
+
+--RECAP-595 Starts Here
+
+-- -----------------------------------------------------
+-- Table `BULK_CUSTOMER_CODE_T`
+-- -----------------------------------------------------
+CREATE TABLE `BULK_CUSTOMER_CODE_T` (
+  `BULK_CUSTOMER_CODE_ID`        INT             NOT NULL AUTO_INCREMENT,
+  `CUSTOMER_CODE`                VARCHAR(45)     NOT NULL,
+  `DESCRIPTION`                  VARCHAR(2000)   NOT NULL,
+  `OWNING_INST_ID`	             INT             NULL,
+  PRIMARY KEY (`BULK_CUSTOMER_CODE_ID`),
+  UNIQUE KEY `BULK_CUSTOMER_CODE_UNIQUE` (`CUSTOMER_CODE`,`OWNING_INST_ID`),
+  INDEX (`CUSTOMER_CODE`),
+  INDEX (`OWNING_INST_ID`),
+  CONSTRAINT `BULK_CUST_CODE_OWNING_INST_ID_FK`
+  FOREIGN KEY (`OWNING_INST_ID`)
+  REFERENCES `INSTITUTION_T` (`INSTITUTION_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `BULK_REQUEST_ITEM_T `
+-- -----------------------------------------------------
+CREATE TABLE `BULK_REQUEST_ITEM_T` (
+  `BULK_REQUEST_ID`         INT           NOT NULL AUTO_INCREMENT,
+  `BULK_REQUEST_NAME`       VARCHAR(255)  NOT NULL,
+  `BULK_REQUEST_FILE_NAME`  VARCHAR(255)  NOT NULL,
+  `BULK_REQUEST_FILE_DATA`  LONGBLOB      NOT NULL,
+  `CREATED_BY`              VARCHAR(45)   NOT NULL,
+  `CREATED_DATE`            DATETIME      NOT NULL,
+  `LAST_UPDATED_DATE`       DATETIME      DEFAULT NULL,
+  `PATRON_ID`               VARCHAR(45)   NOT NULL,
+  `STOP_CODE`               VARCHAR(45)   NOT NULL,
+  `REQUESTING_INST_ID`      INT           NOT NULL,
+  `REQUEST_STATUS`          VARCHAR(45)   NOT NULL,
+  `NOTES`                   VARCHAR(2000) DEFAULT NULL,
+  `EMAIL_ID`                VARCHAR(100)   DEFAULT NULL,
+  PRIMARY KEY (`BULK_REQUEST_ID`),
+  KEY `BULK_REQUESTING_INST_ID_INDX` (`REQUESTING_INST_ID`),
+  CONSTRAINT `BULK_REQUESTING_INST_ID_FK`
+  FOREIGN KEY (`REQUESTING_INST_ID`)
+  REFERENCES `INSTITUTION_T` (`INSTITUTION_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+-- -----------------------------------------------------
+-- Table `BULK_REQUEST_T `
+-- -----------------------------------------------------
+CREATE TABLE `BULK_REQUEST_T` (
+  `BULK_REQUEST_ID` INT NOT NULL,
+  `REQUEST_ID`      INT NOT NULL,
+  PRIMARY KEY (`BULK_REQUEST_ID`,`REQUEST_ID`),
+  KEY `REQUEST_ID_INTER_INDX` (`REQUEST_ID`),
+  CONSTRAINT `BULK_REQUEST_ID_INTER_FK`
+  FOREIGN KEY (`BULK_REQUEST_ID`)
+  REFERENCES `BULK_REQUEST_ITEM_T` (`BULK_REQUEST_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `REQUEST_ID_INTER_FK`
+  FOREIGN KEY (`REQUEST_ID`)
+  REFERENCES `REQUEST_ITEM_T` (`REQUEST_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+) ENGINE=InnoDB;
+
+--RECAP-595 Ends Here
+
+--MS-135 Starts Here
+
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(1,'B1','CUL Bulk Request',2);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(2,'B2','NYPL Bulk request',3);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(3,'B3','PUL Bulk request',1);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(4,'G1','Columbia\'s Google code',2);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(5,'GO','NYPL\'s Google code',3);
+INSERT INTO `recap`.`BULK_CUSTOMER_CODE_T` (`BULK_CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`) VALUES(6,'G2','Princeton\'s Google Code',1);
+
+--MS-135 Ends Here
+
+-- Script for Release 1.1 ends here
+
+
+-- Script for Release 1.0.1 starts here
+
+ALTER TABLE `recap`.`request_item_t` MODIFY EMAIL_ID VARCHAR(100);
+
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job purges the requests that end up with \'Exception\' status and are 365 days old. The number of days is configurable.' WHERE `JOB_NAME`='PurgeExceptionRequests';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job purges the patron email addresses entered in SCSB as part of requests. In case of physical requests, it will be purged 90 days after refile and in case of EDD, 60 days from the date of fulfillment. The number of days are configurable.' WHERE `JOB_NAME`='PurgeEmailAddress';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job initiates the ongoing matching algorithm process in SCSB. The processes are typically executed daily after the accession and submit collection processes are completed.' WHERE `JOB_NAME`='OngoingMatchingAlgorithm';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job reconciles the daily LAS transactions with SCSB.' WHERE `JOB_NAME`='DailyLASTransactionReconciliation';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job generates an ongoing accession report.' WHERE `JOB_NAME`='GenerateAccessionReport';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job initiates the batch ongoing accession process where barcodes that were accumulated throughout the day are processed.' WHERE `JOB_NAME`='Accession';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job runs all the accession process related jobs sequentially. Jobs that are included to run in the sequence are 1) Accession 2) Accession report 3) Submit Collection 4) Matching Algorithm 5) Incremental and Deleted Export.' WHERE `JOB_NAME`='AccessionToDataExportJobsInSequence';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job purges all the accessions which are in \'Complete\' status and are 30 days old. The number of days is configurable.' WHERE `JOB_NAME`='PurgeAccessionRequests';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job does periodic barcode reconciliation between SCSB and LAS.' WHERE `JOB_NAME`='PeriodicLASBarcodeReconciliation';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job captures any deletion of records in SCSB tables related to bibliographic, holdings, items and requests and an email notification is sent.' WHERE `JOB_NAME`='DeletedRecords';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job does a periodic status reconciliation between SCSB and LAS.' WHERE `JOB_NAME`='PeriodicLASItemStatusReconciliation';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job loads the initial request data in SCSB.' WHERE `JOB_NAME`='RequestInitialLoad';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job updates the bib, holdings and item information for the given barcode in MARC or SCSB XML format.' WHERE `JOB_NAME`='SubmitCollection';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='The job runs the incremental and deleted records export job for each institution in sequence.' WHERE `JOB_NAME`='IncrementalAndDeletedExportJobInSequence';
+UPDATE `recap`.`job_t` SET `JOB_NAME`='PurgeCompletedAccessions' WHERE `JOB_NAME`='PurgeAccessionRequests';
+
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (21,'CheckAndNotifyPendingRequest','Check And Notify Pending Request',NULL,NULL,NULL,NULL);
+
+-- Script for Release 1.0.1 ends here
+
+-- Script for Release 1.0 starts here
+
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='PA,PB,PF,PG,PH,PJ,PK,PL,PM,PN,PQ,PS,PT,PW,PZ,QA,QP,QT,IP,QC' WHERE `CUSTOMER_CODE`='GP';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BC,BT,BZ,MP,MR,MZ,IC,CI,DC' WHERE `CUSTOMER_CODE`='MR';
+
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Schomburg Center MARB', `DELIVERY_RESTRICTIONS`='NS,NC,NK,NX,IN,SA,SM,SP,NY,SR', `PWD_DELIVERY_RESTRICTIONS`='NS,NC,NK,NX,SA,SM,SP,NY,SR' WHERE `CUSTOMER_CODE_ID`='84';
+
+UPDATE `recap`.`customer_code_t` SET `CIRC_DESK_LOCATION`='CIRCrecap' WHERE `CUSTOMER_CODE`='IC';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='401 Butler Library (Microforms Reading Room)' WHERE `CUSTOMER_CODE`='CF';
+-- Script for Release 1.0 ends here
+
+-- Script for Release 0.9.34 starts here
+
+UPDATE `recap`.`customer_code_t` SET `CIRC_DESK_LOCATION`='CIRCglx' WHERE `CUSTOMER_CODE`='CF';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='307 Butler (Delivery Services)' WHERE `CUSTOMER_CODE`='CI';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='ReCAP Staff ILL' WHERE `CUSTOMER_CODE`='IC';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MZ,OH,QP,RS', `PWD_DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MZ,OH,QP,RS' WHERE `CUSTOMER_CODE`='OH';
+
+-- Script for Release 0.9.34 ends here
+
+-- Script for Release 0.9.33 starts here
+/*Customer Code changes*/
+
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='AR,BC,BT,BZ,CI,MP,MZ,IC', `PWD_DELIVERY_RESTRICTIONS`='AR,BC,BT,BZ,CI,MP,MZ,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,QP,DC' WHERE `CUSTOMER_CODE_ID`='30';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='401 Butler Library (Microfilm Reading Room)' WHERE `CUSTOMER_CODE_ID`='39';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,RR,QP,DC' WHERE `CUSTOMER_CODE_ID`='43';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,RR,QP' WHERE `CUSTOMER_CODE_ID`='45';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,RR,QP,DC' WHERE `CUSTOMER_CODE_ID`='48';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,RR,QP,DC' WHERE `CUSTOMER_CODE_ID`='49';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='HSL Restricted', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT,IC', `PWD_DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,RR,QP,DC' WHERE `CUSTOMER_CODE_ID`='52';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BS,BT,BU,BZ,CA,CF,CI,CJ,CM,CS,CV,EA,GE,GS,HS,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UT,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,RR,QP,DC' WHERE `CUSTOMER_CODE_ID`='53';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BC,BT,BZ,CI,MP,MZ,UT,IC', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IC,QP,DC' WHERE `CUSTOMER_CODE_ID`='65';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,RR,QP' WHERE `CUSTOMER_CODE_ID`='66';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,RR,QP' WHERE `CUSTOMER_CODE_ID`='67';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,QP' WHERE `CUSTOMER_CODE_ID`='73';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,RR,QP' WHERE `CUSTOMER_CODE_ID`='77';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NP,NC,NE,NK,NI,NV,NX,IN', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,QP' WHERE `CUSTOMER_CODE_ID`='81';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,QP' WHERE `CUSTOMER_CODE_ID`='82';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NS,NC,NK,NX,IN', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,QP' WHERE `CUSTOMER_CODE_ID`='84';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,RR,QP' WHERE `CUSTOMER_CODE_ID`='88';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,RR,QP' WHERE `CUSTOMER_CODE_ID`='96';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,RR,QP' WHERE `CUSTOMER_CODE_ID`='98';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IN,QP' WHERE `CUSTOMER_CODE_ID`='99';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,IN,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='101';
+/*Princeton*/
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='PA,PB,PF,PG,PH,PJ,PK,PL,PM,PN,PQ,PS,PT,PW,PZ,QA,QC,QP,QT,IP', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IP,RR,DP' WHERE `CUSTOMER_CODE_ID`='1';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='PF,QC,QP,QT,IP,QA', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IP,DP' WHERE `CUSTOMER_CODE_ID`='4';
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='EDD' WHERE `CUSTOMER_CODE_ID`='8';
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='EDD' WHERE `CUSTOMER_CODE_ID`='10';
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='EDD' WHERE `CUSTOMER_CODE_ID`='12';
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='IP,DP' WHERE `CUSTOMER_CODE_ID`='19';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='PK,QA,QT,IP,QC', `RECAP_DELIVERY_RESTRICTIONS`='IP,DP' WHERE `CUSTOMER_CODE_ID`='20';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='PF,PL,QC,QP,QT' WHERE `CUSTOMER_CODE_ID`='21';
+UPDATE `recap`.`customer_code_t` SET `DESCRIPTION`='Video Collection', `DELIVERY_RESTRICTIONS`='PA,PB,PF,PG,PH,PJ,PK,PL,PM,PN,PQ,PS,PT,PW,PZ,QA,QC,QP,QT,IP', `RECAP_DELIVERY_RESTRICTIONS`='IP' WHERE `CUSTOMER_CODE_ID`='24';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='PA,PB,PF,PG,PH,PJ,PK,PL,PM,PN,PQ,PS,PT,PW,PZ,QA,QP,QT,IP', `RECAP_DELIVERY_RESTRICTIONS`='EDD,IP,RR,DP' WHERE `CUSTOMER_CODE_ID`='25';
+
+
+/*New customer code*/
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(110,'IC','Recap ILL',NULL,'','','','circRECAP');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(111,'IN','Recap ILL',NULL,'','','','');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(112,'IP','Recap ILL',NULL,'','','','rcpcirc');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(113,'DC','Borrow Direct - Columbia',NULL,'','','','CircRecap');
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES(114,'DP','Borrow Direct - Princeton',NULL,'','','','rcpcirc');
+
+/*delivery restrictions changes*/
+UPDATE `recap`.`delivery_restriction_cross_partner_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR' WHERE `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`delivery_restriction_cross_partner_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6';
+
+
+
+CREATE TABLE IF NOT EXISTS `OWNING_INST_ID_SEQ` (
+  `ID` INTEGER AUTO_INCREMENT,
+   PRIMARY KEY (ID)
+)
+  ENGINE = InnoDB;
+
+-- Script for Release 0.9.33 ends here
+
+-- Script for Release 0.9.32 starts here
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='EDD' WHERE `CUSTOMER_CODE`='PW';
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='EDD' WHERE `CUSTOMER_CODE`='PT';
+UPDATE `recap`.`customer_code_t` SET `RECAP_DELIVERY_RESTRICTIONS`='EDD' WHERE `CUSTOMER_CODE`='PJ'
+
+-- Script for Release 0.9.32 ends here
+
+-- Script for Release 0.9.30 starts here
+
+ALTER TABLE `recap`.`REPORT_T` MODIFY COLUMN `FILE_NAME` VARCHAR(250);
+
+-- Script for Release 0.9.30 ends here
+
+-- Script for Release 0.9.29 starts here
+ALTER TABLE `ITEM_T` ADD COLUMN `INITIAL_MATCHING_DATE` DATE NULL DEFAULT NULL;
+
+ALTER TABLE ITEM_T ADD COLUMN CGD_CHANGE_LOG varchar(20)  DEFAULT NULL;
+
+UPDATE `recap`.`job_t` SET `JOB_NAME`='AccessionToDataExportJobsInSequence', `JOB_DESC`='Runs all the accession process related jobs sequentially. Jobs that are included to run in sequential are, 1) Accession 2) Accession Report 3) Submit Collection 4) Matching Algorithm 5) Incremental and Deleted Export' WHERE `JOB_ID`='7';
+
+-- Script for Release 0.9.29 ends here
+
+-- Script for Release 0.9.28 starts here
+UPDATE `recap`.`job_t` SET `JOB_NAME`='AccessionMatchingAndExportJobsInSequence', `JOB_DESC`='Runs all the accession process related jobs sequentially. Jobs that are included to run in sequential are, 1) Accession 2) Accession Report 3) Matching Algorithm 4) Incremental and Deleted Export' WHERE `JOB_ID`='7';
+
+INSERT INTO `recap`.`job_param_t`(`RECORD_NUM`,`JOB_NAME`) VALUES (2, 'IncrementalRecordsExportPul');
+INSERT INTO `recap`.`job_param_t`(`RECORD_NUM`,`JOB_NAME`) VALUES (3, 'IncrementalRecordsExportCul');
+INSERT INTO `recap`.`job_param_t`(`RECORD_NUM`,`JOB_NAME`) VALUES (4, 'IncrementalRecordsExportNypl');
+INSERT INTO `recap`.`job_param_t`(`RECORD_NUM`,`JOB_NAME`) VALUES (5, 'DeletedRecordsExportPul');
+INSERT INTO `recap`.`job_param_t`(`RECORD_NUM`,`JOB_NAME`) VALUES (6, 'DeletedRecordsExportCul');
+INSERT INTO `recap`.`job_param_t`(`RECORD_NUM`,`JOB_NAME`) VALUES (7, 'DeletedRecordsExportNypl');
+
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (4, 'institutionCodes', 'CUL,NYPL', 2);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (5, 'requestingInstitutionCode', 'PUL', 2);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (6, 'fetchType', '1', 2);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (7, 'outputFormat', '0', 2);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (8, 'institutionCodes', 'PUL,NYPL', 3);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (9, 'requestingInstitutionCode', 'CUL', 3);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (10, 'fetchType', '1', 3);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (11, 'outputFormat', '0', 3);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (12, 'institutionCodes', 'PUL,CUL', 4);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (13, 'requestingInstitutionCode', 'NYPL', 4);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (14, 'fetchType', '1', 4);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (15, 'outputFormat', '1', 4);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (16, 'institutionCodes', 'CUL,NYPL', 5);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (17, 'requestingInstitutionCode', 'PUL', 5);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (18, 'fetchType', '2', 5);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (19, 'outputFormat', '2', 5);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (20, 'institutionCodes', 'PUL,NYPL', 6);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (21, 'requestingInstitutionCode', 'CUL', 6);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (22, 'fetchType', '2', 6);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (23, 'outputFormat', '2', 6);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (24, 'institutionCodes', 'PUL,CUL', 7);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (25, 'requestingInstitutionCode', 'NYPL', 7);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (26, 'fetchType', '2', 7);
+INSERT INTO `recap`.`job_param_data_t`(`JOB_PARAM_DATA_ID`, `PARAM_NAME`, `PARAM_VALUE`, `RECORD_NUM`) VALUES (27, 'outputFormat', '2', 7);
+
+ALTER TABLE MATCHING_BIB_T ADD STATUS VARCHAR(45);
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='66';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,NE,NK,NI,NX,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,NE,NK,NI,NX,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='67';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='73';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='77';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='82';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='88';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='96';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='98';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,IL,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='99';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW', `PWD_DELIVERY_RESTRICTIONS`='NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW' WHERE `CUSTOMER_CODE_ID`='101';
+
+INSERT INTO `recap`.`customer_code_t` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES (106,'OA','SASB Allen Room',3,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`customer_code_t` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES (107,'OC','SASB Cullman Center',3,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`customer_code_t` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES (108,'ON','SASB Noma Scholar Room',3,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`customer_code_t` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`,`PWD_DELIVERY_RESTRICTIONS`,`RECAP_DELIVERY_RESTRICTIONS`,`CIRC_DESK_LOCATION`) VALUES (109,'OW','SASB Wertheim Study',3,NULL,NULL,NULL,NULL);
+
+INSERT INTO `delivery_restriction_cross_partner_t` (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`,`DELIVERY_RESTRICTIONS`,`INSTITUTION_ID`) VALUES (6,'NB,NC,ND,NE,NF,NG,NH,NI,NJ,NK,NM,NN,NO,NP,NR,NS,NT,NV,NX,NY,NZ,GO,SA,SM,SP,SR,OA,OC,ON,OW',3);
+
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='53' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='49' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='48' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='45' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='43' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='30' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='1' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+UPDATE `recap`.`cross_partner_mapping_t` SET `DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='6' WHERE `CUSTOMER_CODE_ID`='25' and`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`='2';
+
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (13,'SubmitCollection','Updates the bib, holding, item information for the given barcode in marc or scsb xml format',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (14,'IncrementalAndDeletedExportJobInSequence','Runs incremental and deleted records export jobs for each institution sequentially.',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (15,'IncrementalRecordsExportPul','Incremental Records Export for PUL',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (16,'IncrementalRecordsExportCul','Incremental Records Export for CUL',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (17,'IncrementalRecordsExportNypl','Incremental Records Export for NYPL',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (18,'DeletedRecordsExportPul','Deleted Records Export for PUL',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (19,'DeletedRecordsExportCul','Deleted Records Export for CUL',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (20,'DeletedRecordsExportNypl','Deleted Records Export for NYPL',NULL,NULL,NULL,NULL,NULL);
+
+-- -----------------------------------------------------
+-- Table `recap`.`ITEM_BARCODE_HISTORY_T`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ITEM_BARCODE_HISTORY_T` (
+  `HISTORY_ID`   INT         NOT NULL AUTO_INCREMENT,
+  `OWNING_INST` VARCHAR(45) NOT NULL,
+  `OWNING_INST_ITEM_ID` VARCHAR(45) NOT NULL,
+  `OLD_BARCODE` VARCHAR(45) NOT NULL,
+  `NEW_BARCODE` VARCHAR(45) NOT NULL,
+  `CREATED_DATE`       DATETIME    NOT NULL,
+  PRIMARY KEY (`HISTORY_ID`)
+)
+  ENGINE = InnoDB;
+-- Script for Release 0.9.28 ends here
+
+-- Script for Release 0.9.27 starts here
+ALTER TABLE `recap`.`item_t` ADD COLUMN `IS_CGD_PROTECTION` TINYINT(1) NOT NULL DEFAULT 0;
+ALTER TABLE `recap`.`item_t` ADD CONSTRAINT `BARCODE_OWN_INST_ID` UNIQUE (`BARCODE`,`OWNING_INST_ID`);
+
+ALTER TABLE `recap`.`job_t` ADD COLUMN `JOB_INSTANCE_ID` INT NULL AFTER `STATUS`;
+
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`,`JOB_INSTANCE_ID`) VALUES (12,'RequestInitialLoad','Load the request initial data in SCSB',NULL,NULL,NULL,NULL,NULL);
+
+UPDATE `recap`.`job_t` SET `JOB_DESC`='Purge the exception status requests which are 365 days older. (Number of days is configurable)' WHERE `JOB_ID`='1';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='Purge the email address attached to a request after 90 days of refile. In case of PHYREQ and after 60 days of EDD fulfillment. (Number of days is configurable)' WHERE `JOB_ID`='2';
+UPDATE `recap`.`job_t` SET `JOB_NAME`='OngoingMatchingAlgorithm', `JOB_DESC`='Ongoing matching algorithm process' WHERE `JOB_ID`='3';
+UPDATE `recap`.`job_t` SET `JOB_NAME`='DailyLASTransactionReconciliation', `JOB_DESC`='Generate daily LAS transaction reconciliation' WHERE `JOB_ID`='4';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='Generate the report for ongoing accession' WHERE `JOB_ID`='5';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='Ongoing accession' WHERE `JOB_ID`='6';
+UPDATE `recap`.`job_t` SET `JOB_NAME`='AccessionAndMatchingJobsInSequence', `JOB_DESC`='Runs all the accession process related jobs sequentially. Jobs that are included to run in sequential are, 1) Accession 2) Accession Report 3) Matching Algorithm' WHERE `JOB_ID`='7';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='Purge all the accession requests which are in the status \"completed\" and 30 days older. (Number of days is configurable)' WHERE `JOB_ID`='8';
+UPDATE `recap`.`job_t` SET `JOB_NAME`='PeriodicLASBarcodeReconciliation', `JOB_DESC`='Generate periodic LAS barcode reconciliation' WHERE `JOB_ID`='9';
+UPDATE `recap`.`job_t` SET `JOB_DESC`='Deletion of records in SCSB tables like bibliographic, holdings, item and request are captured and email notification is sent' WHERE `JOB_ID`='10';
+UPDATE `recap`.`job_t` SET `JOB_NAME`='PeriodicLASItemStatusReconciliation', `JOB_DESC`='Periodic LAS item status reconciliation' WHERE `JOB_ID`='11';
+
+DELETE FROM `recap`.`request_item_t` WHERE REQUEST_STATUS_ID = 9;
+
+-- -----------------------------------------------------
+-- Table `recap`.`ITEM_BARCODE_HISTORY_T`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ITEM_BARCODE_HISTORY_T` (
+  `HISTORY_ID`   INT         NOT NULL AUTO_INCREMENT,
+  `OWNING_INST` VARCHAR(45) NOT NULL,
+  `OWNING_INST_ITEM_ID` VARCHAR(45) NOT NULL,
+  `OLD_BARCODE` VARCHAR(45) NOT NULL,
+  `NEW_BARCODE` VARCHAR(45) NOT NULL,
+  `CREATED_DATE`       DATETIME    NOT NULL,
+  PRIMARY KEY (`HISTORY_ID`)
+)
+  ENGINE = InnoDB;
+
+-- Script for Release 0.9.27 ends here
+
+-- Script for Release 0.9.26 starts here
+
+INSERT INTO `recap`.`ROLE_PERMISSION_T` (`ROLE_ID`,`PERMISSION_ID`) VALUES (6,7);
+
+CREATE TABLE IF NOT EXISTS DELETED_RECORDS_T (
+  DELETED_RECORDS_ID int(11) NOT NULL AUTO_INCREMENT,
+  RECORDS_TABLE varchar(50)  NOT NULL,
+  RECORDS_PRIMARY_KEY varchar(100)  NOT NULL,
+  DELETED_REPORTED_STATUS varchar(30)  NOT NULL,
+  DELETED_DATE datetime NOT NULL,
+  DELETED_BY varchar(50)  DEFAULT NULL,
+  RECORDS_LOG longtext ,
+  PRIMARY KEY (DELETED_RECORDS_ID)
+) ENGINE=InnoDB;
+
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (11,'StatusReconcilation','Status Reconciliation',NULL,NULL,NULL,NULL);
+
+-- Script for Release 0.9.26 ends here
+
+-- Script for Release 0.9.25 starts here
+DROP TABLE `recap`.`REQUEST_INST_BIB_T`;
+DROP TABLE `recap`.`PATRON_T`;
+DROP TABLE `recap`.`ITEM_TRACKING_INFO_T`;
+
+DELETE FROM `recap`.`ITEM_STATUS_T` WHERE `STATUS_CODE`='Loaned';
+DELETE FROM `recap`.`ITEM_STATUS_T` WHERE `STATUS_CODE`='InTransit';
+DELETE FROM `recap`.`ITEM_STATUS_T` WHERE `STATUS_CODE`='ShippedToILS';
+DELETE FROM `recap`.`ITEM_STATUS_T` WHERE `STATUS_CODE`='ShippedToReCAP';
+
+SET SQL_SAFE_UPDATES = 0;
+
+DELETE FROM RECAP.USER_ROLE_T WHERE USER_ID IN (SELECT USER_ID FROM USER_T WHERE LOGIN_ID='superadmin');
+DELETE FROM RECAP.USER_T WHERE LOGIN_ID='superadmin';
+
+SET SQL_SAFE_UPDATES = 1;
+-- Script for Release 0.9.25 ends here
+
+-- Script for Release 0.9.24 starts here
+
+CREATE TABLE IF NOT EXISTS `JOB_PARAM_T` (
+  `RECORD_NUM`    INT  NOT NULL AUTO_INCREMENT,
+  `JOB_NAME`     VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`RECORD_NUM`),
+  UNIQUE INDEX `JOB_NAME_UNIQUE` (`JOB_NAME` ASC)
+)
+  ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `JOB_PARAM_DATA_T` (
+  `JOB_PARAM_DATA_ID` INT         NOT NULL AUTO_INCREMENT,
+  `PARAM_NAME`    VARCHAR(100) NOT NULL,
+  `PARAM_VALUE`   VARCHAR(2000) NOT NULL,
+  `RECORD_NUM`     INT         NULL,
+  PRIMARY KEY (`JOB_PARAM_DATA_ID`),
+  INDEX `RECORD_NUM_idx` (`RECORD_NUM` ASC),
+  INDEX `PARAM_NAME_idx` (`PARAM_NAME` ASC)
+)
+  ENGINE = InnoDB;
+
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BT,BZ,CS,MP,MH,RH,RS' WHERE `CUSTOMER_CODE`='RH';
+UPDATE `recap`.`customer_code_t` SET `DELIVERY_RESTRICTIONS`='BT,BZ,MP,MZ,RS,RH' WHERE `CUSTOMER_CODE`='RS';
+
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (5,'GenerateAccessionReport','Generate Accession Report',NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (6,'Accession','Ongoing Accession',NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (7,'RunJobSequentially','Run Job Sequentially',NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (8,'PurgeAccessionRequests','Purge Accession Requests',NULL,NULL,NULL,NULL);
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (9,'AccessionReconcilation','Generate DailyReconcilation Report',NULL,NULL,NULL,NULL);
+
+-- Script for Release 0.9.24 ends here
+
+-- Script for Release 0.9.23 starts here
+UPDATE `recap`.`CUSTOMER_CODE_T` SET `DESCRIPTION`='Firestone Library' WHERE `CUSTOMER_CODE`='PA';
+INSERT INTO `recap`.`REQUEST_ITEM_STATUS_T` (`REQUEST_STATUS_ID`,`REQUEST_STATUS_CODE`,`REQUEST_STATUS_DESC`) VALUES (9,'INITIAL_LOAD','INITIAL LOAD');
+INSERT INTO `recap`.`job_t` (`JOB_ID`,`JOB_NAME`,`JOB_DESC`,`LAST_EXECUTED_TIME`,`NEXT_RUN_TIME`,`CRON_EXP`,`STATUS`) VALUES (4,'DailyReconcilation','Generate DailyReconcilation Report',NULL,NULL,NULL,NULL);
+
+DROP TABLE AUDIT_T;
+DROP TABLE LOAN_T;
+
+-- Script for Release 0.9.23 ends here
+
+-- Script for Release 0.9.22 starts here
+
+DELETE FROM CROSS_PARTNER_MAPPING_T;
+DELETE FROM DELIVERY_RESTRICTION_CROSS_PARTNER_T;
+DELETE FROM CUSTOMER_CODE_T;
+ALTER TABLE CUSTOMER_CODE_T ADD COLUMN CIRC_DESK_LOCATION VARCHAR(20) NULL DEFAULT NULL AFTER RECAP_DELIVERY_RESTRICTIONS;
+
+INSERT INTO REQUEST_ITEM_STATUS_T (REQUEST_STATUS_ID, REQUEST_STATUS_CODE, REQUEST_STATUS_DESC) VALUES (8,"PROCESSING","PROCESSING ...");
+
+-- Script for Release 0.9.22 starts here
+
+-- Script for Release 0.9.21 starts here
+
+ALTER TABLE `RECAP`.`CROSS_PARTNER_MAPPING_T` DROP FOREIGN KEY `FK_CROSS_PARTNER_CUSTOMER_CODE`;
+
+ALTER TABLE `RECAP`.`CROSS_PARTNER_MAPPING_T` DROP FOREIGN KEY `FK_DELIVERY_RESTRICTION_ID`;
+
+TRUNCATE RECAP.CROSS_PARTNER_MAPPING_T;
+
+TRUNCATE RECAP.CUSTOMER_CODE_T ;
+
+TRUNCATE RECAP.DELIVERY_RESTRICTION_CROSS_PARTNER_T;
+
+ALTER TABLE `RECAP`.`CROSS_PARTNER_MAPPING_T` ADD CONSTRAINT `FK_CROSS_PARTNER_CUSTOMER_CODE` FOREIGN KEY (`CUSTOMER_CODE_ID`) REFERENCES `RECAP`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`)
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE `RECAP`.`CROSS_PARTNER_MAPPING_T` ADD CONSTRAINT `FK_DELIVERY_RESTRICTION_ID` FOREIGN KEY (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`) REFERENCES `RECAP`.`DELIVERY_RESTRICTION_CROSS_PARTNER_T` (`DELIVERY_RESTRICTION_CROSS_PARTNER_ID`)
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Script for Release 0.9.21 starts here
+
+-- Script for Release 0.9.20 starts here
+ALTER TABLE `RECAP`.`CROSS_PARTNER_MAPPING_T` DROP FOREIGN KEY `FK_CROSS_PARTNER_CUSTOMER_CODE`;
+
+TRUNCATE RECAP.CROSS_PARTNER_MAPPING_T;
+
+TRUNCATE RECAP.CUSTOMER_CODE_T ;
+
+ALTER TABLE `RECAP`.`CROSS_PARTNER_MAPPING_T` ADD CONSTRAINT `FK_CROSS_PARTNER_CUSTOMER_CODE` FOREIGN KEY (`CUSTOMER_CODE_ID`) REFERENCES `RECAP`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`)
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- Script for Release 0.9.20 ends here
+
+ALTER TABLE `RECAP`.`CUSTOMER_CODE_T` DROP FOREIGN KEY `CUST_CODE_OWNING_INST_ID_FK`;
+
+ALTER TABLE `RECAP`.`CUSTOMER_CODE_T` CHANGE COLUMN `OWNING_INST_ID` `OWNING_INST_ID` INT(11) NULL ;
+
+ALTER TABLE `RECAP`.`CUSTOMER_CODE_T` ADD CONSTRAINT `CUST_CODE_OWNING_INST_ID_FK` FOREIGN KEY (`OWNING_INST_ID`) REFERENCES `RECAP`.`INSTITUTION_T` (`INSTITUTION_ID`)
+ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE CUSTOMER_CODE_T ADD COLUMN  PWD_DELIVERY_RESTRICTIONS VARCHAR(2000) NULL AFTER DELIVERY_RESTRICTIONS;
+
+ALTER TABLE CUSTOMER_CODE_T ADD COLUMN  RECAP_DELIVERY_RESTRICTIONS VARCHAR(2000) NULL AFTER PWD_DELIVERY_RESTRICTIONS;
+
+SET FOREIGN_KEY_CHECKS=0;
+
+TRUNCATE RECAP.CUSTOMER_CODE_T ;
+
+TRUNCATE RECAP.CROSS_PARTNER_MAPPING_T;
+
+SET FOREIGN_KEY_CHECKS=1;
+
+ALTER TABLE `MATCHING_BIB_INFO_DETAIL_T` CHANGE `RECORD_NUM` `LATEST_RECORD_NUM` int(11);
+
+UPDATE `ROLES_T` SET `ROLE_NAME`='Request' WHERE `ROLE_ID`='3';
+
+INSERT INTO `recap`.`CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`) VALUES( 110,'QX','Broadcast Center',1,'');
+
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='' WHERE `CUSTOMER_CODE` = 'BU' AND `OWNING_INST_ID`='2';
+
+truncate recap.customer_code_t ;
+
+INSERT INTO `COLLECTION_GROUP_T` (`COLLECTION_GROUP_ID`,`COLLECTION_GROUP_CODE`,`COLLECTION_GROUP_DESC`,`CREATED_DATE`,`LAST_UPDATED_DATE`) VALUES (4,'NA','Not Available','2016-05-23 01:00:00',NULL);
+INSERT INTO `REQUEST_ITEM_STATUS_T` (`REQUEST_STATUS_ID`, `REQUEST_STATUS_CODE`, `REQUEST_STATUS_DESC`) VALUES ('7', 'PENDING', 'PENDING');
+INSERT INTO `INSTITUTION_T` (`INSTITUTION_ID`,`INSTITUTION_CODE`,`INSTITUTION_NAME`) VALUES (4,'HTC','HTC Global Services Inc.');
+INSERT INTO `USER_T` (`LOGIN_ID`,`USER_INSTITUTION`,`USER_DESCRIPTION`,`CREATED_DATE`,`CREATED_BY`,`LAST_UPDATED_DATE`,`LAST_UPDATED_BY`) VALUES ('superadmin',4,'HTC User',now(),'ReCAP',now(),'ReCAP');
+INSERT INTO `USER_ROLE_T` (`USER_ID`,`ROLE_ID`) VALUES (LAST_INSERT_ID(),1);
+ALTER TABLE REQUEST_ITEM_T DROP FOREIGN KEY REQUEST_PATRON_ID_FK;
+ALTER TABLE REQUEST_ITEM_T CHANGE COLUMN PATRON_ID PATRON_ID VARCHAR(45) NOT NULL ;
+ALTER TABLE REQUEST_ITEM_T ADD COLUMN EMAIL_ID VARCHAR(45) NULL DEFAULT NULL AFTER NOTES;
+DROP TABLE PATRON_T;
+
+ALTER TABLE REQUEST_ITEM_T DROP COLUMN EMAIL_ID;
+ALTER TABLE REQUEST_ITEM_T ADD COLUMN NOTES VARCHAR(2000) NULL AFTER REQUEST_STATUS_ID;
+DROP TABLE NOTES_T;
+
+ALTER TABLE `PERMISSIONS_T` MODIFY `PERMISSION_NAME` VARCHAR(120);
+
+UPDATE `ROLES_T` SET `ROLE_NAME`='Super Admin' WHERE `ROLE_ID`=1;
+UPDATE `ROLES_T` SET `ROLE_NAME`='Search Request' WHERE `ROLE_ID`=3;
+
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Create User' WHERE `PERMISSION_ID`='1';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Write/Edit CGD' WHERE `PERMISSION_ID`='2';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Deaccession' WHERE `PERMISSION_ID`='3';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Place requests for own institution\'s items and Shared/Open items of other institution' WHERE `PERMISSION_ID`='4';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Place all requests' WHERE `PERMISSION_ID`='5';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Cancel requests' WHERE `PERMISSION_ID`='6';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='View and print reports' WHERE `PERMISSION_ID`='7';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Search' WHERE `PERMISSION_ID`='8';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Search (barcode number masked)' WHERE `PERMISSION_ID`='9';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Request Items' WHERE `PERMISSION_ID`='10';
+UPDATE `PERMISSIONS_T` SET `PERMISSION_NAME`='Cancel all requests' WHERE `PERMISSION_ID`='11';
+
+ALTER TABLE `ROLES_T` ADD COLUMN `CREATED_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `ROLES_T` ADD COLUMN `CREATED_BY` VARCHAR(45) NOT NULL;
+
+ALTER TABLE `ROLES_T` ADD COLUMN `LAST_UPDATED_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `ROLES_T` ADD COLUMN `LAST_UPDATED_BY` VARCHAR(45) NOT NULL;
+
+UPDATE `ROLES_T` SET  `CREATED_BY` = 'ReCAP' WHERE `CREATED_BY` = '';
+
+UPDATE `ROLES_T` SET  `LAST_UPDATED_BY` = 'ReCAP' WHERE `LAST_UPDATED_BY` = '';
+
+ALTER TABLE `USER_T` ADD COLUMN `CREATED_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `USER_T` ADD COLUMN `CREATED_BY` VARCHAR(45) NOT NULL;
+
+ALTER TABLE `USER_T` ADD COLUMN `LAST_UPDATED_DATE` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE `USER_T` ADD COLUMN `LAST_UPDATED_BY` VARCHAR(45) NOT NULL;
+
+UPDATE `USER_T` SET `CREATED_BY` = 'ReCAP' WHERE `CREATED_BY` = '';
+
+UPDATE `USER_T` SET `LAST_UPDATED_BY` = 'ReCAP' WHERE `LAST_UPDATED_BY` = '';
+
+ALTER TABLE REQUEST_ITEM_T ADD COLUMN EMAIL_ID VARCHAR(100) NULL AFTER STOP_CODE;
+ALTER TABLE REQUEST_ITEM_T ADD COLUMN CREATED_BY VARCHAR(45) NOT NULL AFTER REQ_EXP_DATE;
+UPDATE REQUEST_ITEM_T SET CREATED_BY = 'Guest';
+
+DROP VIEW MATCHING_INSTBIB_V;
+
+ALTER TABLE `USER_ROLE_T` ADD PRIMARY KEY(`USER_ID`,`ROLE_ID`);
+
+ALTER TABLE `ROLE_PERMISSION_T` ADD PRIMARY KEY(`ROLE_ID`,`PERMISSION_ID`);
+
+ALTER TABLE USER_T DROP INDEX USER_EMAILID_UNIQUE;
+
+ALTER TABLE REQUEST_ITEM_T ADD COLUMN REQUEST_STATUS_ID INT(11) NOT NULL AFTER REQUESTING_INST_ID, ADD INDEX REQUEST_STATUS_ID_FK_idx (REQUEST_STATUS_ID ASC);
+UPDATE REQUEST_ITEM_T SET REQUEST_STATUS_ID = 4;
+ALTER TABLE REQUEST_ITEM_T ADD CONSTRAINT REQUEST_STATUS_ID_FK FOREIGN KEY (REQUEST_STATUS_ID) REFERENCES REQUEST_ITEM_STATUS_T (REQUEST_STATUS_ID) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE `USER_T`
+ADD COLUMN `USER_EMAILID` VARCHAR(60) NULL AFTER `USER_DESCRIPTION`,
+DROP INDEX `FK_USER_T_1_IDX` ,
+ADD INDEX `FK_USER_T_1_IDX` (`USER_INSTITUTION` ASC, `LOGIN_ID` ASC),
+ADD UNIQUE INDEX `USER_EMAILID_UNIQUE` (`USER_EMAILID` ASC);
+
+ALTER TABLE `MATCHING_MATCHPOINTS_T` MODIFY COLUMN `CRITERIA_VALUE` VARCHAR(500);
+
+ALTER TABLE  `ROLE_PERMISSION_T` DROP FOREIGN KEY `FK_ROLE_PERMISSION_T_1`;
+
+ALTER TABLE `USER_ROLE_T` DROP FOREIGN KEY `FK_USER_ROLE_T_2`;
+
+ALTER TABLE `ROLES_T` MODIFY `ROLE_ID` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `ROLE_PERMISSION_T` ADD CONSTRAINT `FK_ROLE_PERMISSION_T_1` FOREIGN KEY (`ROLE_ID`) REFERENCES `ROLES_T` (`ROLE_ID`);
+
+ALTER TABLE `USER_ROLE_T` ADD CONSTRAINT `FK_USER_ROLE_T_2` FOREIGN KEY (`ROLE_ID`) REFERENCES `ROLES_T` (`ROLE_ID`);
+
+ALTER TABLE  `USER_ROLE_T` DROP FOREIGN KEY `FK_USER_ROLE_T_1`;
+
+ALTER TABLE `USER_T` MODIFY `USER_ID` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `USER_ROLE_T` ADD CONSTRAINT `FK_USER_ROLE_T_1` FOREIGN KEY (`USER_ID`) REFERENCES `USER_T` (`USER_ID`);
+
+ALTER TABLE `ROLE_PERMISSION_T` DROP FOREIGN KEY `FK_ROLE_PERMISSION_T_2`;
+
+ALTER TABLE `PERMISSIONS_T` MODIFY `PERMISSION_ID` INT NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `ROLE_PERMISSION_T` ADD CONSTRAINT `FK_ROLE_PERMISSION_T_2` FOREIGN KEY (`PERMISSION_ID`) REFERENCES `PERMISSIONS_T` (`PERMISSION_ID`);
+
+
+SET @OLD_UNIQUE_CHECKS = @@UNIQUE_CHECKS, UNIQUE_CHECKS = 0;
+SET @OLD_FOREIGN_KEY_CHECKS = @@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS = 0;
+SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'TRADITIONAL';
+
+DELETE FROM `request_type_t` WHERE `REQUEST_TYPE_CODE`='HOLD';
+
+UPDATE `request_type_t` SET `REQUEST_TYPE_ID`='1' WHERE `REQUEST_TYPE_CODE`='RETRIEVAL';
+
+UPDATE `request_type_t` SET `REQUEST_TYPE_ID`='2' WHERE `REQUEST_TYPE_CODE`='RECALL';
+
+UPDATE `request_type_t` SET `REQUEST_TYPE_ID`='3' WHERE `REQUEST_TYPE_CODE`='EDD';
+
+UPDATE `request_type_t` SET `REQUEST_TYPE_ID`='4' WHERE `REQUEST_TYPE_CODE`='BORROW DIRECT';
+
+ALTER TABLE `request_type_t` AUTO_INCREMENT = 5 ;
+
+SET SQL_MODE = @OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS = @OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS = @OLD_UNIQUE_CHECKS;
+
+
+ALTER TABLE `recap`.`request_item_t`
+DROP COLUMN `REQUEST_POSITION`,
+DROP INDEX `REQUEST_POSITION_ITEM_ID_PATRON_IDUNIQUE` ;
+
+ALTER TABLE `BIBLIOGRAPHIC_T` ADD COLUMN `CATALOGING_STATUS` VARCHAR(20);
+ALTER TABLE `ITEM_T` ADD COLUMN `CATALOGING_STATUS` VARCHAR(20);
+
+ALTER TABLE `CUSTOMER_CODE_T` DROP INDEX `CUSTOMER_CODE_UNIQUE`;
+ALTER TABLE `CUSTOMER_CODE_T` ADD CONSTRAINT CUSTOMER_CODE_UNIQUE UNIQUE (`CUSTOMER_CODE`,`OWNING_INST_ID`);
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'AC' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'AD' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'AR' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'AV' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'BC' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'BL' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'BR' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'BS' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'BT' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'BU' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'BZ' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'CA' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'CF' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'CH' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'CI' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'CJ' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'CM' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'CP' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'CR' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'CS' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'CU' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'CV' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'EA' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'EN' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'EV' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'GC' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'GE' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'GS' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'HR' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'HS' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'HX' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'JC' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'JD' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'LD' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'LE' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'ML' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'MP' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'MR' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'MZ' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'OH' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'RH' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'RS' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2', `DELIVERY_RESTRICTIONS`='AC,AD,AR,AV,BC,BL,BR,BS,BT,BU,BZ,CA,CF,CH,CI,CJ,CM,CP,CR,CS,CU,CV,EA,EN,EV,GC,GE,GS,HR,HS,HX,JC,JD,LD,LE,ML,MP,MR,MZ,OH,RH,RS,SW,UA,UT,CD,CL,CX,JL,JM' WHERE `CUSTOMER_CODE` = 'SW' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'UA' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `OWNING_INST_ID`='2' WHERE `CUSTOMER_CODE` = 'UT' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NA' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NC**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'ND**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NE**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NF**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NG**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS,EDD,GO,IL,RR' WHERE `CUSTOMER_CODE` = 'NH' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NI**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NJ**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NK**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS,EDD,GO,IL,RR' WHERE `CUSTOMER_CODE` = 'NL' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NM**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NT**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS,EDD,GO,IL,RR' WHERE `CUSTOMER_CODE` = 'NW' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NY' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'NZ**' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'GN' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'ID' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS' WHERE `CUSTOMER_CODE` = 'JN' AND `OWNING_INST_ID`='3';
+UPDATE `CUSTOMER_CODE_T` SET `DELIVERY_RESTRICTIONS`='NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS,EDD,GO,IL,RR' WHERE `CUSTOMER_CODE` = 'JO' AND `OWNING_INST_ID`='3';
+INSERT INTO `CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`) VALUES (116,'GO','Google NYPL',3,'NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS');
+INSERT INTO `CUSTOMER_CODE_T` (`CUSTOMER_CODE_ID`,`CUSTOMER_CODE`,`DESCRIPTION`,`OWNING_INST_ID`,`DELIVERY_RESTRICTIONS`) VALUES (117,'JS','SIBL De-duping candidates',3,'NA,NB,NC**,ND**,NE**,NF**,NG**,NH,NI**,NJ**,NK**,NL,NM**,NN,NO,NP,NQ,NR,NS,NT**,NU,NV,NW,NX,NY,NZ**,GN,GO,ID,JN,JO,JS');
+
+ALTER TABLE `request_item_t` CHANGE `CREATD_DATE` `CREATED_DATE` DATETIME;
+
+ALTER TABLE `request_item_t` ADD COLUMN `REQUESTING_INST_ID` INT NOT NULL;
+
+ALTER TABLE `request_item_t` ADD INDEX `REQUESTING_INST_ID_FK_idx` (`REQUESTING_INST_ID` ASC);
+
+ALTER TABLE `request_item_t` ADD CONSTRAINT `REQUESTING_INST_ID_FK` FOREIGN KEY (`REQUESTING_INST_ID`) REFERENCES `institution_t` (`INSTITUTION_ID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+UPDATE `request_type_t` SET `REQUEST_TYPE_CODE`='BORROW DIRECT', `REQUEST_TYPE_DESC`='BORROW DIRECT' WHERE `REQUEST_TYPE_ID`='5';
+
+DROP INDEX OCLC_idx ON matching_bib_t;
+
+DROP INDEX ISBN_idx ON matching_bib_t;
+
+DROP INDEX ISSN_idx ON matching_bib_t;
+
+ALTER TABLE matching_bib_t MODIFY COLUMN OCLC VARCHAR(1500);
+
+ALTER TABLE matching_bib_t MODIFY COLUMN ISBN VARCHAR(1500);
+
+ALTER TABLE matching_bib_t MODIFY COLUMN ISSN VARCHAR(1500);

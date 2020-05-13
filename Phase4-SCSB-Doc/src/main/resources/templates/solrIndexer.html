@@ -1,0 +1,729 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>SCSB Solr Index</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../lib/Bootstrap/css/bootstrap.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/datepicker.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/bootstrap-datetimepicker.css}"/>
+    <script type="text/javascript" th:src="@{../lib/jquery.js}"></script>
+    <script type="text/javascript" th:src="@{../lib/Bootstrap/js/bootstrap.js}"></script>
+    <script type="text/javascript" th:src="@{../lib/Buttons/js/buttons.colVis.js}"></script>
+    <script type="text/javascript" th:src="@{../js/bootstrap-datepicker.js}"></script>
+    <script type="text/javascript" th:src="@{../js/bootstrap-datetimepicker.js}"></script>
+    <script type="text/javascript" th:src="@{../js/solrIndexer.js}"></script>
+</head>
+<body>
+<section>
+<div class="container">
+    <div class="jumbotron">
+        <h1 align="center">SCSB Solr Admin</h1>
+    </div>
+
+    <ul class="nav nav-tabs nav-justified">
+        <li class="active"><a data-toggle="tab" href="#solrFullIndex">Solr Full Index</a></li>
+        <li><a data-toggle="tab" href="#solrPartialIndex">Solr Partial Index</a></li>
+        <li><a data-toggle="tab" href="#matchingAlgorithmSaveReport">Initial Matching Algorithm</a></li>
+        <li><a data-toggle="tab" href="#ongoingMatchingJob">Ongoing Matching Job</a></li>
+        <li><a data-toggle="tab" href="#generateReports"> Generate Reports</a></li>
+        <li><a data-toggle="tab" href="#RequestReSubmit"> Request Re-Submit</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="solrFullIndex" class="tab-pane fade in active">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="fullIndexingDiv">
+                            <br/><br/>
+                            <div class="container">
+                                <!-- Horizontal Form -->
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div th:fragment="index-form" xmlns:th="http://www.thymeleaf.org"
+                                             th:remove="tag">
+                                            <form id="fullIndex-form" name="fullIndex-form" class="form-horizontal"
+                                                  action="#"
+                                                  th:action="@{/solrIndexer/fullIndex}"
+                                                  th:object="${solrIndexRequest}" method="post">
+
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <label for="numberOfThreads" class="col-sm-4">Number of
+                                                            threads</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{numberOfThreads}"
+                                                                   class="form-control"
+                                                                   id="numberOfThreads"
+                                                                   placeholder="Number of threads"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <span id="numberOfThreadErrorMessage"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="numberOfDocs" class="col-sm-4">Number of Documents
+                                                            to be
+                                                            processed per thread</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{numberOfDocs}"
+                                                                   class="form-control bfh-number"
+                                                                   id="numberOfDocs"
+                                                                   placeholder="Number of Docs"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <span id="numberOfDocErrorMessage"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="commitInterval" class="col-sm-4">Commit
+                                                            Interval</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{commitInterval}"
+                                                                   class="form-control"
+                                                                   id="commitInterval"
+                                                                   placeholder="Commit Interval"/>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <span id="commitIntervalErrorMessage"></span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="institutionCode" class="col-sm-4">Institution
+                                                            Code</label>
+
+                                                        <div class="col-sm-7">
+                                                            <select id="institutionCode"
+                                                                    class="form-control"
+                                                                    style="width: 160px;"
+                                                                    th:field="*{owningInstitutionCode}">
+                                                                <option value="">ALL</option>
+                                                                <option value="PUL">PUL</option>
+                                                                <option value="CUL">CUL</option>
+                                                                <option value="NYPL">NYPL</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-7">
+                                                            <label for="clean">Clean All/Institution</label> &nbsp;&nbsp;
+                                                            <input type="checkbox" id="clean" name="clean"
+                                                                   th:field="*{doClean}"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="dateFrom" class="col-sm-4">Date From</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{dateFrom}"
+                                                                   class="form-control date"
+                                                                   id="dateFrom"
+                                                                   placeholder="Date From"/>
+                                                            <span class="add-on">
+                                                                <i data-time-icon="icon-time"
+                                                                   data-date-icon="icon-calendar"></i>
+                                                                </span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">
+                                                            <label for="autoRefresh">Auto Refresh</label> &nbsp;&nbsp;
+                                                            <input type="checkbox" id="autoRefresh" name="autoRefresh"
+                                                                   value="autoRefresh" onclick="refresh();"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <div class="col-sm-4">
+                                                            <button id="submit" type="submit" name="fullIndex"
+                                                                    class="btn btn-info active  pull-right">Index
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <textarea class="form-control" id="fullIndexingStatus" rows="5"
+                                                                  placeholder="Full Indexing Status" readonly="true"></textarea>
+                                                    </div>
+                                                </fieldset>
+
+                                                <div id="deleteConfirmationModal" class="modal fade" role="dialog" data-keyboard="false" data-backdrop="static">
+                                                    <div class="modal-dialog">
+                                                        <div id="deleteConfModalContent" class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title">Clean Index Confirmation</h4>
+                                                            </div>
+                                                            <div class="modal-body" style="height: 100px;">
+                                                                <p>Do you want to proceed to Clean the existing solr data and Index ?</p>
+                                                                <div class="col-sm-4 pull-right">
+                                                                    <button id="proceedBtn" type="button" name="action" onclick="proceedIndex()"
+                                                                            class="btn btn-primary">Proceed
+                                                                    </button>
+                                                                    <button id="cancelBtn" type="button" name="cancel" data-dismiss="modal"
+                                                                            class="btn btn-danger">Cancel
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="solrPartialIndex" class="tab-pane fade">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <div id="partialIndexDiv">
+                                <br/><br/>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div th:fragment="reports-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+                                                <form id="partialIndex-form" name="reports-form" class="form-horizontal"
+                                                      action="#"
+                                                      th:action="@{/solrIndexer/partialIndex}"
+                                                      th:object="${solrIndexRequest}" method="post">
+                                                    <fieldset>
+                                                        <div class="form-group">
+                                                            <label for="numberOfThreads" class="col-sm-4">Number of
+                                                                threads</label>
+
+                                                            <div class="col-sm-4">
+                                                                <input type="text" th:field="*{numberOfThreads}"
+                                                                       class="form-control"
+                                                                       id="noOfThreads"
+                                                                       placeholder="Number of threads" th:required="true"/>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <span id="noOfThreadErrorMessage"></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="numberOfDocs" class="col-sm-4">Number of Documents
+                                                                to be
+                                                                processed per thread</label>
+
+                                                            <div class="col-sm-4">
+                                                                <input type="text" th:field="*{numberOfDocs}"
+                                                                       class="form-control bfh-number"
+                                                                       id="noOfDocs"
+                                                                       placeholder="Number of Docs" th:required="true"/>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <span id="noOfDocErrorMessage"></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            <label for="commitInterval" class="col-sm-4">Commit
+                                                                Interval</label>
+
+                                                            <div class="col-sm-4">
+                                                                <input type="text" th:field="*{commitInterval}"
+                                                                       class="form-control"
+                                                                       id="commitIntervalForPartialIndex"
+                                                                       placeholder="Commit Interval"/>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <span id="commitIntervalErrorMsg"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style="padding-left: 40px;">
+                                                            <label for="BibIdList" accesskey="R" class="radio-inline report-hide-shadow" style="padding-right: 30px;" tabindex="0">
+                                                                <input type="radio" name="BibIdList"
+                                                                       id="BibIdList" value="BibIdList"
+                                                                       onclick="showBibIdList()" th:field="*{partialIndexType}"/>
+                                                                BibIdList
+                                                            </label>
+                                                            <label for="BibIdRange" accesskey="A" class="radio-inline report-hide-shadow" style="padding-right: 30px;" tabindex="0">
+                                                                <input type="radio" name="BibIdRange"
+                                                                       id="BibIdRange" value="BibIdRange"
+                                                                       onclick="showBibIdRange()" th:field="*{partialIndexType}"/>
+                                                                BibIdRange
+                                                            </label>
+                                                            <label for="DateRange" accesskey="C" class="radio-inline report-hide-shadow" style="padding-right: 30px" tabindex="0">
+                                                                <input type="radio" name="ReportTypeoption"
+                                                                       id="DateRange"
+                                                                       value="DateRange"
+                                                                       onclick="showBibIdDateRange()" th:field="*{partialIndexType}"/>
+                                                                BibIdDateRange
+                                                            </label>
+                                                        </div>
+
+                                                        <div>
+                                                            <div id="BibIdListView" style="display:none">
+                                                                <div id="BibIds" style="margin-top: 30px;">
+                                                                    <label>Enter Bib Id's</label>
+                                                                    <input class="form-control input-lg" type="text" id="BibIdListInput" th:field="*{bibIds}"
+                                                                           placeholder="Enter values separated by comma"/>
+                                                                </div>
+                                                                <div style="margin-top: 30px; padding-left: 200px;">
+                                                                    <button class="btn btn-info active"
+                                                                            id="bibIdListSubmit"
+                                                                            type="submit"> Submit
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div>
+                                                            <div id="BibIdRangeView" style="display:none">
+                                                                <div id="BibIdRangeFrom" style="margin-top: 30px;">
+                                                                    <label>Bib Id From</label>
+                                                                    <input class="form-control" type="text" id="BibIdFrom" th:field="*{fromBibId}"/>
+                                                                </div>
+                                                                <div id="BibIdRangeTo" style="margin-top: 30px;">
+                                                                    <label>Bib Id To</label>
+                                                                    <input class="form-control" type="text" id="BibIdTo" th:field="*{toBibId}"/>
+                                                                </div>
+                                                                <div style="margin-top: 30px; padding-left: 200px;">
+                                                                    <button class="btn btn-info active"
+                                                                            id="bibIdRangeSubmit"
+                                                                            type="submit"> Submit
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div>
+                                                            <div id="DateRangeView" style="display:none">
+                                                                <div id="DateRangeFrom" style="margin-top: 30px;">
+                                                                    <label>Date From</label>
+                                                                    <input type="text"
+                                                                           class="form-control date"
+                                                                           id="partialIndexFromDate"
+                                                                           placeholder="From Date" th:field="*{dateFrom}"/>
+                                                                    <span class="add-on">
+                                                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                                                    </span>
+                                                                </div>
+
+                                                                <div id="DateRangeTo" style="margin-top: 30px;">
+                                                                    <label>Date To</label>
+                                                                    <input type="text"
+                                                                           class="form-control date"
+                                                                           id="partialIndexToDate"
+                                                                           placeholder="To Date" th:field="*{dateTo}"/>
+                                                                    <span class="add-on">
+                                                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                                <div style="margin-top: 30px; padding-left: 200px;">
+                                                                    <button class="btn btn-info active"
+                                                                            id="bibIdDateRangeSubmit"
+                                                                            type="submit"> Submit
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group" style="margin-top: 30px;">
+                                                            <textarea class="form-control" id="partialIndexingStatus" rows="5"
+                                                                      placeholder="Partial Indexing Status" readonly="true"></textarea>
+                                                        </div>
+                                                    </fieldset>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div id="matchingAlgorithmSaveReport" class="tab-pane fade">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="matchingAlgoDiv">
+                            <br/><br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label for="matchingCriteria" class="col-sm-4">Matching Criterias</label>
+                                            <div class="col-sm-4">
+                                                <select id="matchingCriteria"
+                                                        class="form-control"
+                                                        style="width: 160px;" th:onchange="'javascript:showDateField()'">
+                                                    <option value="ALL">Run Matching Full Process</option>
+                                                    <option value="MatchingAndReports">Find Matching And Save Reports</option>
+                                                    <option value="Reports">Save Only Reports</option>
+                                                    <option value="UpdateMonographCGDInDB">Update Monographs CGD In DB</option>
+                                                    <option value="UpdateSerialCGDInDB">Update Serials CGD In DB</option>
+                                                    <option value="UpdateMvmCGDInDB">Update MVMs CGD In DB</option>
+                                                    <option value="UpdateCGDInSolr">Update CGD In Solr</option>
+                                                    <option value="PopulateDataForDataDump">Populate Data For Data Dump</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <br/><br/>
+                                        <div class="form-group" id="matchingAlgoDateDiv">
+                                            <label for="matchingAlgoDate" class="col-sm-4">Date</label>
+
+                                            <div class="col-sm-4">
+                                                <input type="text" th:field="${matchingAlgoDate}"
+                                                       class="form-control bfh-number"
+                                                       id="matchingAlgoDate"
+                                                       placeholder="Date"/>
+                                            </div>
+                                        </div>
+                                        <br/><br/>
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <button id="saveReport" type="button" onclick="saveReport()"
+                                                        class="btn btn-info active  pull-right">Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <br/><br/><br/>
+                                        <div class="form-group col-sm-12">
+                                        <textarea class="form-control" id="matchingAlgorithmStatus" rows="5"
+                                                  placeholder="Matching Algorithm Status" readonly="true"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ongoingMatchingJob" class="tab-pane fade">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="matchingAlgoJobDiv">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <br/><br/>
+                                        <div th:fragment="matchingAlgoJob-form" th:remove="tag">
+                                            <form id="matchingAlgoJob-form" name="matchingAlgoJob-form"
+                                                  class="form-horizontal" th:action="@{/ongoingMatchingJob}"
+                                                  action="#"
+                                                  th:object="${solrIndexRequest}" method="post">
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <label for="jobType" class="col-sm-4">Job Type</label>
+                                                        <div class="col-sm-4">
+                                                            <select id="jobType"
+                                                                    class="form-control" th:field="*{processType}">
+                                                                <option value="ongoingMatchingAlgorithmJob">Ongoing Matching Algorithm Job</option>
+                                                                <option value="populateDataForDataDumpJob">Populate Data For DataDump Job</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="fromDate" class="col-sm-4">Date From</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{createdDate}"
+                                                                   class="form-control bfh-number"
+                                                                   id="fromDate"
+                                                                   placeholder="Date"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4"></label>
+                                                        <div class="col-sm-4">
+                                                            <button id="matchingAlgoJobButton" type="submit"
+                                                                    name="matchingAlgoJobButton"
+                                                                    class="btn btn-info active">Submit
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="generateReports" class="tab-pane fade">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="reportsDiv">
+                            <br/><br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div th:fragment="reports-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+                                            <form id="reports-form" name="reports-form" class="form-horizontal" action="#"
+                                                  th:object="${solrIndexRequest}" method="post" enctype="multipart/form-data">
+
+                                                <fieldset>
+                                                    <div class="form-group">
+                                                        <label for="processType" class="col-sm-4">Process Type</label>
+                                                        <div class="col-sm-8">
+                                                            <select id="processType" class="form-control" style="width: 160px;"
+                                                                    th:field="*{processType}">
+                                                                <option value="SolrIndex">Solr Index</option>
+                                                                <option value="Accession">Accession</option>
+                                                                <option value="DeAccession">DeAccession</option>
+                                                                <option value="SubmitCollection">Submit Collection</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="reportType" class="col-sm-4">Report Type</label>
+
+                                                        <div class="col-sm-4">
+                                                            <select id="reportType"
+                                                                    class="form-control"
+                                                                    style="width: 160px;"
+                                                                    th:field="*{reportType}">
+                                                                <option value="SolrIndexException">SolrIndexException</option>
+                                                                <option value="DeAccession_Summary_Report">DeAccession Summary Report</option>
+                                                                <option value="Ongoing_Accession_Report">Ongoing Accession Report</option>
+                                                                <option value="Accession_Summary_Report">Accession Summary Report</option>
+                                                                <option value="Submit_Collection_Rejection_Report">Submit Collection Rejection Report</option>
+                                                                <option value="Submit_Collection_Exception_Report">Submit Collection Exception Report</option>
+                                                                <option value="Submit_Collection_Success_Report">Submit Collection Success Report</option>
+                                                                <option value="SubmitCollection_Failure_Report">Submit Collection Failure Report</option>
+                                                                <option value="SubmitCollectionSummary">Submit Collection Summary Report</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div id="reportInstitutionNameDiv" class="form-group">
+                                                        <label for="reportInstitutionName" class="col-sm-4">Institution</label>
+
+                                                        <div class="col-sm-4">
+                                                            <select id="reportInstitutionName"
+                                                                    class="form-control"
+                                                                    style="width: 160px;"
+                                                                    th:field="*{owningInstitutionCode}">
+                                                                <option value="ALL">ALL</option>
+                                                                <option value="PUL">PUL</option>
+                                                                <option value="CUL">CUL</option>
+                                                                <option value="NYPL">NYPL</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="transmissionType" class="col-sm-4">Transmission Type</label>
+
+                                                        <div class="col-sm-4">
+                                                            <select id="transmissionType"
+                                                                    class="form-control"
+                                                                    style="width: 160px;"
+                                                                    th:field="*{transmissionType}">
+                                                                <option value="FileSystem">File System</option>
+                                                                <option value="FTP">FTP</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="createdDate" class="col-sm-4">Date From</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{createdDate}"
+                                                                   class="form-control bfh-number"
+                                                                   id="createdDate"
+                                                                   placeholder="Date"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="todate" class="col-sm-4">Date To</label>
+
+                                                        <div class="col-sm-4">
+                                                            <input type="text" th:field="*{toDate}"
+                                                                   class="form-control bfh-number"
+                                                                   id="todate"
+                                                                   placeholder="Date"/>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4"></label>
+                                                        <div class="col-sm-4">
+                                                            <button id="report" type="submit" name="report"
+                                                                    class="btn btn-info active">Generate Report
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <br/><br/><br/>
+                                                    <div class="form-group col-sm-12">
+                                                        <textarea class="form-control" id="reportStatus" rows="5"
+                                                                  placeholder="Report Status" readonly="true"></textarea>
+                                                    </div>
+
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="RequestReSubmit" class="tab-pane fade">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div id="RequestReSubmitDiv">
+                            <br/><br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <div th:fragment="requests-form" xmlns:th="http://www.thymeleaf.org" th:remove="tag">
+                                            <form id="requestResubmit-form" name="requests-form" class="form-horizontal"
+                                                  action="/resubmitRequests" th:object="${solrIndexRequest}" method="post">
+                                                <fieldset>
+                                                    <div class="form-group" style="padding-left: 10px;">
+                                                        <label for="RequestStatus" accesskey="R" class="radio-inline report-hide-shadow" style="padding-right: 10px;" tabindex="0">
+                                                            <input type="radio" name="RequestStatus"
+                                                                   id="RequestStatus" value="RequestStatus"
+                                                                   onclick="showRequest()" th:field="*{replaceRequestByType}"/>
+                                                            By Request Status
+                                                        </label>
+                                                        <label for="RequestId" accesskey="R" class="radio-inline report-hide-shadow" style="padding-right: 10px;" tabindex="0">
+                                                            <input type="radio" name="RequestIds"
+                                                                   id="RequestId" value="RequestIds"
+                                                                   onclick="showRequest()" th:field="*{replaceRequestByType}"/>
+                                                            By Request Id's
+                                                        </label>
+                                                        <label for="RequestIdRange" accesskey="A" class="radio-inline report-hide-shadow" style="padding-right: 10px;" tabindex="0">
+                                                            <input type="radio" name="RequestIdRange"
+                                                                   id="RequestIdRange" value="RangeOfRequestIds"
+                                                                   onclick="showRequest()" th:field="*{replaceRequestByType}"/>
+                                                            By Range of Request Id's
+                                                        </label>
+                                                        <label for="RequestDateRange" accesskey="C" class="radio-inline report-hide-shadow" style="padding-right: 10px" tabindex="0">
+                                                            <input type="radio" name="RequestDateRange"
+                                                                   id="RequestDateRange"
+                                                                   value="RangeOfRequestDates"
+                                                                   onclick="showRequest()" th:field="*{replaceRequestByType}"/>
+                                                            By Date Range of Requests
+                                                        </label>
+                                                    </div>
+
+
+                                                    <div>
+                                                        <div id="RequestStatusView" style="display:none">
+                                                            <div id="RequestStatusDiv" style="margin-top: 30px;">
+                                                                <label>Request Status</label>
+                                                                <select id="RequestStatusSelect"
+                                                                        class="form-control"
+                                                                        style="width: 160px;"
+                                                                        th:field="*{requestStatus}">
+                                                                    <option value="PENDING">PENDING</option>
+                                                                    <option value="EXCEPTION">EXCEPTION</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <div id="RequestIdListView" style="display:none">
+                                                            <div id="RequestIds" style="margin-top: 30px;">
+                                                                <label>Enter Request Id's</label>
+                                                                <input class="form-control input-lg" type="text" id="RequestIdListInput" th:field="*{requestIds}"
+                                                                       placeholder="Enter values separated by comma"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <div id="RequestIdRangeView" style="display:none">
+                                                            <div id="RequestIdRangeFrom" style="margin-top: 30px;">
+                                                                <label>Start Request Id</label>
+                                                                <input class="form-control" type="text" id="RequestIdFrom" th:field="*{startRequestId}"/>
+                                                            </div>
+                                                            <div id="RequestIdRangeTo" style="margin-top: 30px;">
+                                                                <label>End Request Id</label>
+                                                                <input class="form-control" type="text" id="RequestIdTo" th:field="*{endRequestId}"/>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <div id="RequestDateRangeView" style="display:none">
+                                                            <div id="RequestDateRangeFrom" style="margin-top: 30px;">
+                                                                <label>Date From</label>
+                                                                <input type="text"
+                                                                       class="form-control date"
+                                                                       id="RequestFromDate"
+                                                                       placeholder="From Date" th:field="*{fromDate}"/>
+                                                                <span class="add-on">
+                                                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                                                    </span>
+                                                            </div>
+
+                                                            <div id="RequestDateRangeTo" style="margin-top: 30px;">
+                                                                <label>Date To</label>
+                                                                <input type="text"
+                                                                       class="form-control date"
+                                                                       id="RequetToDate"
+                                                                       placeholder="To Date" th:field="*{toDate}"/>
+                                                                <span class="add-on">
+                                                                        <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                                                                    </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="requestSubmitBtnDiv" style="margin-top: 30px; padding-left: 200px; display: none">
+                                                        <button class="btn btn-info active"
+                                                                id="requestSubmit"
+                                                                type="submit"> Submit
+                                                        </button>
+                                                    </div>
+                                                    <div class="form-group" style="margin-top: 30px;">
+                                                            <textarea class="form-control" id="resubmitRequestStatus" rows="8"
+                                                                      placeholder="RequestReSubmit Status" readonly="true"></textarea>
+                                                    </div>
+                                                </fieldset>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</body>
+</html>

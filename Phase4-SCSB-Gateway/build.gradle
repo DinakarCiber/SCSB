@@ -1,0 +1,79 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+plugins {
+	id "org.sonarqube" version "2.0.1"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'spring-boot'
+apply plugin: 'jacoco'
+
+//added to accept systemproperties while executing gradlew test cmd
+test {
+	systemProperties = System.properties
+}
+
+jar {
+	baseName = 'scsb'
+	version = '0.0.1-SNAPSHOT'
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web-services')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('commons-beanutils:commons-beanutils:1.9.2')
+	compile('io.springfox:springfox-swagger-ui:2.5.0')
+	compile('io.springfox:springfox-swagger2:2.5.0')
+	compile('org.apache.commons:commons-lang3:3.4')
+	compile('org.codehaus.jettison:jettison:1.3.7')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+	compile('org.apache.camel:camel-bindy:2.18.0')
+	compile('org.apache.camel:camel-spring-boot-starter:2.18.0')
+	compile('org.apache.camel:camel-ftp:2.18.0')
+	compile('org.apache.camel:camel-csv:2.18.0')
+	compile('info.freelibrary:freelib-marc4j:2.6.12')
+	compile('org.apache.solr:solr-solrj:6.0.1')
+	compile('org.apache.activemq:activemq-camel:5.14.1')
+	compile('org.apache.activemq:activemq-pool:5.14.1')
+	compile('org.apache.activemq:activemq-broker:5.14.1')
+	compile('org.apache.activemq:activemq-client:5.14.1')
+	runtime('mysql:mysql-connector-java:6.0.3')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+jacocoTestReport {
+	group = "Reporting"
+	reports {
+		xml.enabled true
+		csv.enabled false
+		html.enabled = true
+		html.destination "${buildDir}/jacocoHtml"
+	}
+}
+
+task scsbJavadocs(type: Javadoc) {
+	source = sourceSets.main.java
+	classpath = configurations.compile
+	options.addStringOption('Xdoclint:none', '-quiet')
+	String home = System.getProperty("user.home");
+	destinationDir =  new File(home+"/scsb-javadocs/scsb");
+
+}
